@@ -1,66 +1,45 @@
-import NextLink from 'next/link';
-import React from 'react';
-import { Text } from 'react-native-web';
+import React, { useState } from "react";
+import { StyleSheet, TouchableWithoutFeedback, Text, View } from "react-native";
 
-// https://github.com/zeit/next.js#with-link
-// Combines the Next.js <Link> with React Native's <Text> component.
-// Enables use like this:
-//
-//    <Link
-//      href={href}
-//      prefetch
-//      style={styles.enhance}
-//     >
-//       Link text
-//    </Link>
-//
-export default Link extends React.Component {
-  static propTypes = {
-    ...NextLink.propTypes,
-    ...Text.propTypes
-  }
-  
-  blur() {
-    this._textRef.blur();
-  }
-  
-  focus() {
-    this._textRef.focus();
-  }
-  
-  setNativeProps(props) {
-    this._textRef.setNativeProps(props)
-  }
-  
-  _setRef = (c) => {
-    this._textRef = c;
-  }
-  
-  render() {
-    const {
-      as,
-      passHref, // ignore
-      scroll,
-      shallow,
-      replace,
-      ...rest
-    } = this.props;
-    
-    return (
-      <NextLink
-        href={href}
-        passHref={true}
-        prefetch={prefetch}
-        replace={replace}
-        scroll={scroll}
-        shallow={shallow}
-      >
-        <Text
-          accessibilityRole='link'
-          ref={this._setRef}
-          {...rest}
-        />
-      </NextLink>
-    )
-  }
+const TouchableWithoutFeedbackExample = () => {
+  const [count, setCount] = useState(0);
+
+  const onPress = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.countContainer}>
+        <Text style={styles.countText}>Count: {count}</Text>
+      </View>
+      <TouchableWithoutFeedback onPress={onPress}>
+        <View style={styles.button}>
+          <Text>Touch Here</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 10
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10
+  },
+  countContainer: {
+    alignItems: "center",
+    padding: 10
+  },
+  countText: {
+    color: "#FF00FF"
+  }
+});
+
+export default TouchableWithoutFeedbackExample;
